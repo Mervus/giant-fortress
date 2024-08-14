@@ -1,0 +1,21 @@
+Dwarth Fortress clone.
+
+- Java
+- Simulator
+- Tick System (action takes x Ticks)
+
+Feature
+- Töten
+- Heilen
+- Essen
+
+Lebewesen
+- Health
+- Hunger
+- enum Gefühl
+- Personality
+
+Rassen
+- Elf
+- Mensch
+- Zwerge

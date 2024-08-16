@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mervus.Main;
+import com.mervus.world.MapGenerator;
 import com.mervus.world.TileData;
 
 public class Entity {
@@ -25,9 +26,13 @@ public class Entity {
         this.position = position;
     }
 
+    /**
+     *
+     * @param direction Vector 0 - 1
+     */
     public void move(Vector2 direction)
     {
-        position.add(direction.x * 40, direction.y * 40 );
+        position.add(direction.x * MapGenerator.TILE_WIDTH, direction.y * MapGenerator.TILE_HEIGHT);
 
         TileData tileData = Main.getInstance().mapData.get(position);
         if (tileData != null)

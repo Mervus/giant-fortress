@@ -34,12 +34,16 @@ public class Entity {
     {
         position.add(direction.x * MapGenerator.TILE_WIDTH, direction.y * MapGenerator.TILE_HEIGHT);
 
+
+
         TileData tileData = Main.getInstance().mapData.get(position);
         if (tileData != null)
         {
             tileData.entity = this;
         }
-        sprite.setPosition(position.x, position.y);
+        if (tileData.tile.isWalkable == true) {
+            sprite.setPosition(position.x, position.y);
+        }
 
         isMoving = false;
     }
@@ -57,12 +61,31 @@ public class Entity {
 
     private void update()
     {
-        boolean isPressed = Gdx.input.isKeyJustPressed(Input.Keys.A);
-        if (isPressed && !isMoving)
+        boolean isPressedW = Gdx.input.isKeyJustPressed(Input.Keys.W);
+        if (isPressedW && !isMoving)
+        {
+            isMoving = true;
+            move(0, 1);
+        }
+        boolean isPressedA = Gdx.input.isKeyJustPressed(Input.Keys.A);
+        if (isPressedA && !isMoving)
+        {
+            isMoving = true;
+            move(-1, 0);
+        }
+        boolean isPressedS = Gdx.input.isKeyJustPressed(Input.Keys.S);
+        if (isPressedS && !isMoving)
+        {
+            isMoving = true;
+            move(0, -1);
+        }
+        boolean isPressedD = Gdx.input.isKeyJustPressed(Input.Keys.D);
+        if (isPressedD && !isMoving)
         {
             isMoving = true;
             move(1, 0);
         }
+
 
 
     }

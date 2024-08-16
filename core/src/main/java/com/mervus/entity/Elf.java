@@ -1,8 +1,11 @@
 package com.mervus.entity;
 
-public class Elf extends Entity{
+import com.badlogic.gdx.math.Vector2;
 
-    public Elf(int x, int y) {
-        super("Animals/elfs/elf.png", x, y);
+public class Elf extends Entity{
+    public Elf(Vector2 position) {
+        super("animals/elfs/elf.png", position);
+        sprite.setCenter(16, 32);
     }
+
 }

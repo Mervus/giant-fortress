@@ -1,30 +1,24 @@
 package com.mervus.world;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mervus.Main;
+import com.badlogic.gdx.math.Vector2;
 
 public class Tile{
-    ShapeRenderer shape;
-    private int x;
-    private int y;
+    Sprite sprite;
+    Vector2 position;
 
-    public Tile(int x, int y, int n)
+    public Tile(Vector2 position, int n)
     {
-        shape = new ShapeRenderer();
-        this.x = x;
-        this.y = y;
-
-        shape.setColor(n % 2 < 1 ? Color.RED : Color.GREEN);
+        this.position = position;
+        sprite = new Sprite(new Texture("tiles/grass.png"));
+        sprite.setPosition(position.x, position.y);
+        sprite.setSize(MapGenerator.TILE_WIDTH,MapGenerator.TILE_HEIGHT);
     }
 
     public void render(SpriteBatch batch)
     {
-
-        shape.setProjectionMatrix(Main.getInstance().camera.combined);
-        shape.begin(ShapeRenderer.ShapeType.Filled);
-        shape.rect(this.x, this.y, 10, 10);
-        shape.end();
+        sprite.draw(batch);
     }
 }

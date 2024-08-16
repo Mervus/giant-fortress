@@ -9,12 +9,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mervus.entity.Dwarf;
 import com.mervus.entity.Elf;
+import com.mervus.entity.Entity;
 import com.mervus.world.MapGenerator;
 import com.mervus.world.Tile;
+import com.mervus.world.TileData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -38,23 +45,30 @@ public class Main extends ApplicationAdapter {
     public final static float WIDTH = 500;
     public final static float HEIGHT = 16 * WIDTH / 9;
 
-    FitViewport viewport;
+    private FitViewport viewport;
     public OrthographicCamera camera;
     Tile[] tiles;
-    Elf elf;
+    ArrayList<Entity> entities;
+    public HashMap<Vector2, TileData> mapData;
 
     @Override
     public void create() {
-        camera = new OrthographicCamera(50, 100);
-        viewport = new FitViewport(50, 50, camera);
+        camera = new OrthographicCamera(50, 50);
+        viewport = new FitViewport(640, 480, camera);
         batch = new SpriteBatch();
-        tiles = MapGenerator.generateTiles();
-        elf = new Elf(0, 0);
+        mapData = new HashMap<Vector2, TileData>();
+        tiles = MapGenerator.generateTiles(mapData);
+        entities = new ArrayList<Entity>();
+        Elf elf = new Elf(new Vector2(0,0));
+        entities.add(elf);
+        mapData.get(elf.position).entity = elf;
+        //entities.add(new Dwarf(new Vector2(115,0)));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        float delta = Gdx.graphics.getDeltaTime();
+
         camera.update();
         batch.begin();
         for (int i = 0; i < tiles.length; i++) {
@@ -63,9 +77,11 @@ public class Main extends ApplicationAdapter {
         batch.end();
 
         batch.begin();
-        elf.render(batch);
+        for (int i = 0; i < entities.size(); i++)
+        {
+            entities.get(i).render(batch);
+        }
         batch.end();
-
     }
 
     @Override

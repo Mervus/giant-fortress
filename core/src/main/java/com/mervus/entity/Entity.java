@@ -1,26 +1,64 @@
 package com.mervus.entity;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.mervus.Main;
+import com.mervus.world.TileData;
 
 public class Entity {
-    int x,y;
+    public Vector2 position;
     Texture texture;
     Sprite sprite;
+    boolean isMoving;
 
-    public Entity(String texturePath, int x, int y)
+    public Entity(String texturePath, Vector2 position)
     {
         texture = new Texture(texturePath);
         sprite = new Sprite(texture);
-        sprite.setPosition(10, 10);
-        sprite.setRotation(45);
-        this.x = x;
-        this.y = y;
+        sprite.setPosition(position.x, position.y);
+        isMoving = false;
+
+        this.position = position;
+    }
+
+    public void move(Vector2 direction)
+    {
+        position.add(direction.x * 40, direction.y * 40 );
+
+        TileData tileData = Main.getInstance().mapData.get(position);
+        if (tileData != null)
+        {
+            tileData.entity = this;
+        }
+        sprite.setPosition(position.x, position.y);
+
+        isMoving = false;
+    }
+
+    public void move(int x, int y)
+    {
+        move(new Vector2(x, y));
     }
 
     public void render(SpriteBatch batch)
     {
-        batch.draw(texture, 0, 0);
+        update();
+        sprite.draw(batch);
+    }
+
+    private void update()
+    {
+        boolean isPressed = Gdx.input.isKeyJustPressed(Input.Keys.A);
+        if (isPressed && !isMoving)
+        {
+            isMoving = true;
+            move(1, 0);
+        }
+
+
     }
 }

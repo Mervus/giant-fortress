@@ -23,7 +23,7 @@ public class MapGenerator {
                 int howGrayIsIt = getGrayscaleValue(noiseMap, x, y);
 
                 Vector2 pos = new Vector2((x * TILE_WIDTH), (y * TILE_HEIGHT));
-                tiles[tileCount] = new Tile(pos, howGrayIsIt > 145 ? TileType.STONE : TileType.GRASS);
+                tiles[tileCount] = new Tile(pos, getTileType(howGrayIsIt));
                 mapData.put(pos, new TileData(tiles[tileCount]));
                 tileCount++;
             }
@@ -32,6 +32,17 @@ public class MapGenerator {
 
         System.out.println(tileCount);
         return tiles;
+    }
+
+    public static TileType getTileType(int value)
+    {
+        if (value > 118 && value < 123)
+            return TileType.TREE;
+
+        if (value > 145)
+            return TileType.STONE;
+
+        return TileType.GRASS;
     }
 
     public static BufferedImage loadNoise()

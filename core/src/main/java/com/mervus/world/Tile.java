@@ -24,6 +24,9 @@ public class Tile extends Actor {
                 break;
             case STONE:
                 texturePath = "tiles/stone.png";
+                break;
+            case TREE:
+                texturePath = "tiles/tree.png";
         }
         this.setWidth(MapGenerator.TILE_WIDTH);
         this.setHeight(MapGenerator.TILE_HEIGHT);

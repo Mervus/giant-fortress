@@ -4,4 +4,5 @@ public enum TileType {
     GRASS,
     WATER,
     STONE,
+    TREE,
 }

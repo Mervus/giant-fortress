@@ -3,14 +3,17 @@ package com.mervus.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mervus.Main;
 import com.mervus.world.MapGenerator;
 import com.mervus.world.TileData;
 
-public class Entity {
+public class Entity extends Actor
+{
     public Vector2 position;
     Texture texture;
     Sprite sprite;
@@ -49,10 +52,15 @@ public class Entity {
         move(new Vector2(x, y));
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(sprite.getTexture(), position.x, position.y);
+    }
+
     public void render(SpriteBatch batch)
     {
         update();
-        sprite.draw(batch);
+        //sprite.draw(batch);
     }
 
     private void update()
